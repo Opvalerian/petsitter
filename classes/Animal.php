@@ -2,9 +2,9 @@
 
 class Animal
 {
-    private $id, $nome, $especie, $raca, $idade;
+    private $id, $nome, $especie, $raca, $idade, $id_tutor;
 
-    public function __construct($id = null, $nome, $especie, $raca, $idade)
+    public function __construct($id = null, $nome, $especie, $raca, $idade, $id_tutor = null)
     {
         if (!empty($id)) {
             $this->setId($id);
@@ -13,6 +13,9 @@ class Animal
         $this->setEspecie($especie);
         $this->setRaca($raca);
         $this->setIdade($idade);
+        if (!empty($id_tutor)) {
+            $this->setId_tutor($id_tutor);
+        }
     }
 
     //setters
@@ -54,6 +57,11 @@ class Animal
         $this->idade = $idade;
     }
 
+    public function setId_tutor($id_tutor)
+    {
+        $this->id_tutor = $id_tutor;
+    }
+
     //getters
 
     public function getId()
@@ -79,5 +87,10 @@ class Animal
     public function getIdade()
     {
         return $this->idade;
+    }
+
+    public function getId_tutor()
+    {
+        return $this->id_tutor;
     }
 }

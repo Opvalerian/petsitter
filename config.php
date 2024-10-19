@@ -1,5 +1,5 @@
 <?php
-$dsn = 'mysql:host=localhost;dbname=petsitter;charset=utf8';//Data Source Name
+$dsn = 'mysql:host=localhost;dbname=petsitter;charset=utf8'; // Data Source Name
 $username = 'root'; // Usuário
 $password = ''; // Senha
 
@@ -9,4 +9,5 @@ try {
     //echo "Conectado com sucesso!";
 } catch (PDOException $e) {
     echo 'Erro: ' . $e->getMessage();
+    exit; // Para evitar que o código continue se houver erro de conexão
 }

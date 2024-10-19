@@ -4,44 +4,48 @@ require_once "Animal.php";
 
 class AnimalDAO
 {
-    public function create (Animal $animal)
+    private $pdo;
+
+    public function __construct()
     {
         require_once __DIR__ . '/../config.php';
+        global $pdo; // Usa a variável global do config.php
+        $this->pdo = $pdo; // Atribui o PDO à propriedade da classe
+    }
 
+    public function create(Animal $animal)
+    {
         try {
-            $query = "INSERT INTO animais (nome, especie, raca, idade) VALUES (:NOME, :ESPECIE, :RACA, :IDADE)";
-
-            $stmt = $pdo->prepare($query);
+            $query = "INSERT INTO animais (nome, especie, raca, idade, id_tutor) VALUES (:NOME, :ESPECIE, :RACA, :IDADE, :ID_TUTOR)";
+            $stmt = $this->pdo->prepare($query);
 
             $stmt->bindValue(":NOME", $animal->getNome());
             $stmt->bindValue(":ESPECIE", $animal->getEspecie());
             $stmt->bindValue(":RACA", $animal->getRaca());
             $stmt->bindValue(":IDADE", $animal->getIdade());
+            $stmt->bindValue(":ID_TUTOR", $animal->getId_tutor());
 
             $stmt->execute();
-
             echo "Animal cadastrado com sucesso!";
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
     }
 
-    public function update (Animal $animal)
+    public function update(Animal $animal)
     {
-        require_once __DIR__ . '/../config.php';
-
         try {
-            $query = "UPDATE animais SET nome = :NOME, especie = :ESPECIE, raca = :RACA, idade = :IDADE WHERE id = :ID";
+            $query = "UPDATE animais SET nome = :NOME, especie = :ESPECIE, raca = :RACA, idade = :IDADE, id_tutor = :ID_TUTOR WHERE id = :ID";
+            $stmt = $this->pdo->prepare($query);
 
-            $stmt = $pdo->prepare($query);
-
+            $stmt->bindValue(':ID', $animal->getId());
             $stmt->bindValue(":NOME", $animal->getNome());
             $stmt->bindValue(":ESPECIE", $animal->getEspecie());
             $stmt->bindValue(":RACA", $animal->getRaca());
             $stmt->bindValue(":IDADE", $animal->getIdade());
+            $stmt->bindValue(":ID_TUTOR", $animal->getId_tutor());
 
             $stmt->execute();
-
             echo "Dados alterados com sucesso";
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -50,13 +54,9 @@ class AnimalDAO
 
     public function read()
     {
-        require_once __DIR__ . '/../config.php';
-
-
         try {
             $query = "SELECT * FROM animais";
-
-            $result = $pdo->query($query);
+            $result = $this->pdo->query($query);
 
             return $result;
         } catch (PDOException $e) {
@@ -64,36 +64,29 @@ class AnimalDAO
         }
     }
 
-    public function delete ($id)
+    public function delete($id)
     {
-        require_once __DIR__ . '/../config.php';
-
         try {
             $query = "DELETE FROM animais WHERE id = :ID";
-
-            $stmt = $pdo->prepare($query);
+            $stmt = $this->pdo->prepare($query);
 
             $stmt->bindValue(":ID", $id);
-
             $stmt->execute();
-
             echo "Animal excluido com sucesso";
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
     }
 
-    public function search ($id)
+    public static function search($id)
     {
         require_once __DIR__ . '/../config.php';
+        global $pdo;
 
         try {
             $query = "SELECT * FROM animais WHERE id = :ID";
-
-            $stmt = $pdo->query($query);
-
+            $stmt = $pdo->prepare($query);
             $stmt->bindValue(":ID", $id);
-
             $stmt->execute();
 
             return $stmt->fetch(PDO::FETCH_ASSOC);
