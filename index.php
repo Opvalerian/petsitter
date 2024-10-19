@@ -72,7 +72,7 @@ require_once(dirname(__FILE__) ."/classes/TutorDAO.php");
                     <option value="<?php echo $tutor['id']; ?>"><?php echo $tutor['nome']; ?></option>
 
                     <?php
-                        }
+                        } 
                     ?>
                     </select>
                 </div>

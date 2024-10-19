@@ -4,7 +4,7 @@ class Animal
 {
     private $id, $nome, $especie, $raca, $idade, $id_tutor;
 
-    public function __construct($id = null, $nome, $especie, $raca, $idade, $id_tutor = null)
+    public function __construct($id = null, $nome, $especie, $raca, $idade, $id_tutor)
     {
         if (!empty($id)) {
             $this->setId($id);
@@ -13,9 +13,7 @@ class Animal
         $this->setEspecie($especie);
         $this->setRaca($raca);
         $this->setIdade($idade);
-        if (!empty($id_tutor)) {
-            $this->setId_tutor($id_tutor);
-        }
+        $this->setId_tutor($id_tutor);
     }
 
     //setters
@@ -59,6 +57,9 @@ class Animal
 
     public function setId_tutor($id_tutor)
     {
+        if (empty($id_tutor)) {
+            throw new Exception("Preencha o tutor do Animal");
+        }
         $this->id_tutor = $id_tutor;
     }
 

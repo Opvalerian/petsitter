@@ -1,6 +1,6 @@
 <?php
 
-require_once "Animal.php";
+require_once(dirname(__FILE__) ."/../classes/Animal.php");
 
 class AnimalDAO
 {

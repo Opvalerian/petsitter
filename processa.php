@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
         
         if ($_POST["acao"] === "cadastrar") {
             
-            $animal = new Animal("", $_POST["nome"], $_POST["especie"], $_POST["raca"], $_POST["idade"]);
+            $animal = new Animal("", $_POST["nome"], $_POST["especie"], $_POST["raca"], $_POST["idade"], $_POST["id_tutor"]);
 
             $animalDAO = new AnimalDAO();
 
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
 
         } elseif ($_POST["acao"] === "editar") {
             
-            $animal = new Animal($_POST["id"], $_POST["nome"], $_POST["especie"], $_POST["raca"], $_POST["idade"]);
+            $animal = new Animal($_POST["id"], $_POST["nome"], $_POST["especie"], $_POST["raca"], $_POST["idade"], $_POST["id_tutor"]);
 
             $animalDAO = new AnimalDAO();
 
